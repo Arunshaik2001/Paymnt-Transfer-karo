@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  emailId String @id @unique
+  userName String
+  password String
+  upiId Int @unique
+  bankAccountNumber Int @unique
+  userVerified Boolean
+  authType AuthType
+  onRampTransactions RampTransaction[] @relation("onRampTransactions")
+  offRampTransactions RampTransaction[] @relation("offRampTransactions")
+  balance Int
+  accountType AccountType
+  sentTransactions P2PTransaction[] @relation("debitedAccount")
+  receivedTransactions P2PTransaction[] @relation("creditedAccount")
+}
+
+model RampTransaction {
+  txId Int @id @default(autoincrement())
+  onRampAccountUpiId Int? 
+  offRampAccountUpiId Int?
+  date DateTime
+  txStatus Status
+  bankToken String @unique
+  providerBank BankName
+  amount Int
+  accountOnRamp  Account? @relation("onRampTransactions", fields: [onRampAccountUpiId], references: [upiId])
+  accountOffRamp Account? @relation("offRampTransactions", fields: [offRampAccountUpiId], references: [upiId])
+  transactionType RampTransactionType
+}
+
+model P2PTransaction {
+  txId Int @id @default(autoincrement())
+  fromUpiId Int
+  toUpiId Int
+  amount Int
+  date DateTime
+  status Status
+  fromAccount Account @relation("debitedAccount", fields: [fromUpiId], references: [upiId])
+  toAccount Account @relation("creditedAccount", fields: [toUpiId], references: [upiId])
+}
+
+enum AuthType {
+  GOOGLE
+  EMAIL
+}
+
+enum Status {
+  INITIATED
+  PROCESSING
+  SUCCESS
+  FAILED
+}
+
+enum AccountType {
+  NORMAL_USER
+  MERCHANT
+}
+
+enum BankName {
+  HDFC
+  KOTAK
+}
+
+enum RampTransactionType {
+  OnRamp 
+  OffRamp
+}
+

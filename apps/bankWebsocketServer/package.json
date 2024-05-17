@@ -1,0 +1,22 @@
+{
+  "name": "bankwebsocketserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx esbuild ./src/index.ts --bundle --platform=node --outfile=dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.17.0",
+    "esbuild": "0.21.1",
+    "@repo/types": "*"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.10"
+  }
+}
