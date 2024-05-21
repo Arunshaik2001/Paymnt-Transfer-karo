@@ -11,18 +11,18 @@ import brcypt from "bcrypt";
 async function main() {
   const userAccount = await prisma.account.upsert({
     where: {
-      emailId: "arun@g.com",
+      email: "arun@g.com",
       upiId: 1,
     },
     update: {},
     create: {
-      userName: "ArunShaik",
+      name: "ArunShaik",
       password: await brcypt.hash("123456", 10),
       userVerified: true,
       authType: AuthType.EMAIL,
       accountType: AccountType.NORMAL_USER,
       balance: 100000,
-      emailId: "arun@g.com",
+      email: "arun@g.com",
       upiId: 1,
       bankAccountNumber: 1234567,
     },
@@ -30,18 +30,18 @@ async function main() {
 
   const merchantAccount = await prisma.account.upsert({
     where: {
-      emailId: "arun1@g.com",
+      email: "arun1@g.com",
       upiId: 2,
     },
     update: {},
     create: {
-      userName: "Shaik",
+      name: "Shaik",
       password: await brcypt.hash("789456", 10),
       userVerified: true,
       authType: AuthType.GOOGLE,
       accountType: AccountType.MERCHANT,
       balance: 200000,
-      emailId: "arun1@g.com",
+      email: "arun1@g.com",
       upiId: 2,
       bankAccountNumber: 789456,
     },
@@ -75,7 +75,7 @@ async function main() {
     where: { txId: 1 },
     update: {},
     create: {
-      onRampAccountUpiId: 1,
+      onRampAccountId: 1,
       amount: 100000,
       providerBank: BankName.HDFC,
       txStatus: Status.SUCCESS,
@@ -89,7 +89,7 @@ async function main() {
     where: { txId: 2 },
     update: {},
     create: {
-      offRampAccountUpiId: 2,
+      offRampAccountId: 2,
       amount: 200000,
       providerBank: BankName.HDFC,
       txStatus: Status.SUCCESS,

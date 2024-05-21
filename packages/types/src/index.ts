@@ -14,6 +14,7 @@ export interface BankPayload extends JwtPayload {
 export interface PaymntTransactionPaymentPayload extends JwtPayload {
   amount: number;
   bankAccountNumber: number;
+  paymntUserId: number;
 }
 
 export type SweepToBankType = {

@@ -14,16 +14,17 @@ datasource db {
 }
 
 model Account {
-  emailId String @id @unique
-  userName String
+  id Int @id @default(autoincrement())
+  email String @unique
+  name String?
   password String
-  upiId Int @unique
-  bankAccountNumber Int @unique
+  upiId Int? @unique
+  bankAccountNumber Int? @unique
   userVerified Boolean
   authType AuthType
   onRampTransactions RampTransaction[] @relation("onRampTransactions")
   offRampTransactions RampTransaction[] @relation("offRampTransactions")
-  balance Int
+  balance Int?
   accountType AccountType
   sentTransactions P2PTransaction[] @relation("debitedAccount")
   receivedTransactions P2PTransaction[] @relation("creditedAccount")
@@ -31,15 +32,15 @@ model Account {
 
 model RampTransaction {
   txId Int @id @default(autoincrement())
-  onRampAccountUpiId Int? 
-  offRampAccountUpiId Int?
+  onRampAccountId Int? 
+  offRampAccountId Int?
   date DateTime
   txStatus Status
   bankToken String @unique
   providerBank BankName
   amount Int
-  accountOnRamp  Account? @relation("onRampTransactions", fields: [onRampAccountUpiId], references: [upiId])
-  accountOffRamp Account? @relation("offRampTransactions", fields: [offRampAccountUpiId], references: [upiId])
+  accountOnRamp  Account? @relation("onRampTransactions", fields: [onRampAccountId], references: [id])
+  accountOffRamp Account? @relation("offRampTransactions", fields: [offRampAccountId], references: [id])
   transactionType RampTransactionType
 }
 

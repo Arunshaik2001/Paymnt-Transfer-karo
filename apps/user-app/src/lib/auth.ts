@@ -1,5 +1,7 @@
-import { AuthOptions } from "next-auth";
+import { AuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import getUser from "../actions/getUser";
+import getUserById from "../actions/getUserById";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -17,9 +19,75 @@ export const authOptions: AuthOptions = {
           type: "password",
         },
       },
-      authorize(credentials, req) {
+      async authorize(credentials, req) {
+        try {
+          const userRes = await getUser(
+            credentials!.email,
+            credentials!.password
+          );
+
+          if (userRes) {
+            return userRes;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+
         return null;
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET || "secret",
+  pages: {
+    signIn: "/login",
+  },
+  callbacks: {
+    async jwt({ token, user, account, profile, trigger, session }) {
+      //
+
+      if (trigger == "update") {
+        const sessionData = session as Session;
+        const user = await getUserById(sessionData.user!.userId!);
+
+        return { ...token, ...user };
+      }
+
+      if (user) {
+        return {
+          ...token,
+          ...user,
+        };
+      }
+
+      if (token!.id) {
+        const userData = await getUserById(Number(token!.id));
+
+        console.log({
+          ...token,
+          ...userData,
+        });
+
+        return {
+          ...token,
+          ...userData,
+        };
+      }
+
+      return token;
+    },
+    async session({ session, token, user }) {
+      // console.log("AUTHORIZE1 ");
+      // console.log(token);
+      if (session.user) {
+        session.user!.accountType = token.accountType;
+        session.user!.balance = token!.balance;
+        session.user!.bankAccountNumber = token!.bankAccountNumber;
+        session.user!.upiId = token!.upiId;
+        session.user!.userId = token!.id;
+
+        return session;
+      }
+      return session;
+    },
+  },
 };
