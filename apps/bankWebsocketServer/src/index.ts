@@ -1,6 +1,7 @@
-import WebSocket, { RawData, WebSocketServer } from "ws";
+import WebSocket, { WebSocketServer } from "ws";
 import http, { IncomingMessage, ServerResponse } from "http";
 import { WebsocketTransactionPayload } from "@repo/types/types";
+import { rawDataToJson } from "@repo/utils/utils";
 
 const httpServer = http.createServer(
   (request: IncomingMessage, response: ServerResponse) => {
@@ -9,26 +10,6 @@ const httpServer = http.createServer(
     response.end("Hello, world!\n");
   }
 );
-
-const rawDataToJson = (data: RawData) => {
-  if (Buffer.isBuffer(data)) {
-    // If data is Buffer
-    return JSON.parse(data.toString("utf-8"));
-  } else if (data instanceof ArrayBuffer) {
-    // If data is ArrayBuffer
-    const buffer = Buffer.from(data);
-    return JSON.parse(buffer.toString("utf-8"));
-  } else if (
-    Array.isArray(data) &&
-    data.every((item) => Buffer.isBuffer(item))
-  ) {
-    // If data is an array of Buffers
-    const combinedBuffer = Buffer.concat(data);
-    return JSON.parse(combinedBuffer.toString("utf-8"));
-  } else {
-    throw new Error("Unsupported data type");
-  }
-};
 
 const wss = new WebSocketServer({ server: httpServer });
 

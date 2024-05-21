@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
+import { P2PTransaction } from "@prisma/client";
 
 export default function P2PTransfer() {
   const { data: userSession, update } = useSession();
@@ -45,7 +46,7 @@ export default function P2PTransfer() {
       validInputMap.current.amount
     );
 
-    if (!(tx.data instanceof String)) {
+    if (tx.data.txId) {
       toast.success("Successfully Transferred...");
       await update({
         ...userSession,
@@ -56,7 +57,7 @@ export default function P2PTransfer() {
         },
       });
     } else {
-      toast.error(tx.data);
+      toast.error(tx.data as String);
     }
   };
 
@@ -77,7 +78,7 @@ export default function P2PTransfer() {
           type="text"
           name="upiId"
           placeholderText={"Enter Upi Id"}
-          pattern="^\d{1,7}$"
+          pattern="^\d{7,7}$"
           errorText="Please Enter 7 digit Upi Id"
           ref={toUserRef}
           className="w-full rounded-lg p-3 focus:border-blue-500 focus:ring-blue-500"

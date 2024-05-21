@@ -3,13 +3,14 @@
 import sessionAtom from "@/store/atoms/sessionAtom";
 import { formatCurrency, getGreeting } from "@/utility/utils";
 import { useRecoilValue } from "recoil";
+import QRCodeWithCopy from "./QrCode";
 
 export default function HomePage() {
   const user = useRecoilValue(sessionAtom);
 
   return (
     <>
-      <div className="w-full flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="w-full flex flex-row justify-around items-center min-h-screen bg-gray-100">
         <div className="bg-gradient-to-r from-blue-500 to-green-500 shadow-2xl rounded-2xl p-10 max-w-md w-full">
           <div className="text-white font-bold text-2xl">
             {getGreeting()}, {user?.name}
@@ -20,6 +21,9 @@ export default function HomePage() {
           <div className="pt-5 font-bold text-xl text-yellow-300">
             {formatCurrency(user?.balance!)}
           </div>
+        </div>
+        <div>
+          <QRCodeWithCopy upiId={user?.upiId!} />
         </div>
       </div>
     </>

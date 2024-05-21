@@ -8,16 +8,9 @@ export default async function getUserRampTransactions(
 ) {
   try {
     const transactions = await prisma.rampTransaction.findMany({
-      where: {
-        OR: [
-          {
-            onRampAccountId: isOnRamp ? userId : null,
-          },
-          {
-            offRampAccountId: !isOnRamp ? userId : null,
-          },
-        ],
-      },
+      where: isOnRamp
+        ? { onRampAccountId: userId }
+        : { offRampAccountId: userId },
     });
 
     return transactions;
