@@ -1,0 +1,47 @@
+version: "0.1"
+name: "paymnt-app"
+
+services:
+  turbo:
+    container_name: payment-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+      - "3005:3005"
+      - "3006:3006"
+      - "5555:5555"
+    volumes:
+      - ./:/app/
+      - /app/node_modules/
+    restart: on-failure
+    environment:
+      - DATABASE_URL=postgresql://postgres:rised@postgres:5432/paymnt?schema=public
+    depends_on:
+      - postgres
+    networks:
+      - common-network
+
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rised
+      POSTGRES_DB: paymnt
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - common-network
+
+
+networks:
+  common-network:
+    driver: bridge
+
+volumes:
+  postgres:
