@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, forwardRef, useEffect, useState } from "react";
+import { HTMLInputTypeAttribute, forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
@@ -40,44 +40,49 @@ const TextFieldWithLabel = forwardRef<
     const [showPassword, setShowPassword] = useState(false);
     const inputType = showPassword ? "text" : type;
 
+    // Create a local ref to handle the ref properly
+    const internalRef = useRef<HTMLInputElement | null>(null);
+    useImperativeHandle(ref, () => internalRef.current!);
+
     const handleInput = () => {
-      if (ref && ref.current) {
+      const currentRef = internalRef.current;
+      if (currentRef) {
         if (onTextChange) {
-          onTextChange(ref!.current.value.trim());
+          onTextChange(currentRef.value.trim());
         }
-        if (!ref.current.checkValidity()) {
+        if (!currentRef.checkValidity()) {
           setErrorMessage(errorText);
           onValidText("");
         } else {
           setErrorMessage("");
-          onValidText(ref!.current.value.trim());
+          onValidText(currentRef.value.trim());
         }
       }
     };
 
-    const handlePaste = (event: any) => {
-      if (type == "password") event.preventDefault();
+    const handlePaste = (event: React.ClipboardEvent<HTMLInputElement>) => {
+      if (type === "password") event.preventDefault();
     };
 
-    const handleCopy = (event: any) => {
-      if (type == "password") event.preventDefault();
+    const handleCopy = (event: React.ClipboardEvent<HTMLInputElement>) => {
+      if (type === "password") event.preventDefault();
     };
 
     useEffect(() => {
-      if (showError && errorMessage == "") {
+      if (showError && errorMessage === "") {
         setErrorMessage(errorText);
       }
-    }, [showError]);
+    }, [showError, errorText, errorMessage]);
 
     return (
       <div className={`py-2 w-full ${className}`}>
         <div className="mb-4">
           {showLabel ? (
             <label
-              htmlFor="error"
+              htmlFor={name}
               className={
                 errorMessage
-                  ? "block mb-2 text-md font-semibold  text-red-700 dark:text-red-500"
+                  ? "block mb-2 text-md font-semibold text-red-700 dark:text-red-500"
                   : "mb-2 font-semibold text-md"
               }
             >
@@ -89,7 +94,7 @@ const TextFieldWithLabel = forwardRef<
             <input
               name={name}
               required={true}
-              ref={ref}
+              ref={internalRef}
               type={inputType}
               pattern={pattern}
               onPaste={handlePaste}
@@ -122,5 +127,6 @@ const TextFieldWithLabel = forwardRef<
     );
   }
 );
+
 
 export default TextFieldWithLabel;

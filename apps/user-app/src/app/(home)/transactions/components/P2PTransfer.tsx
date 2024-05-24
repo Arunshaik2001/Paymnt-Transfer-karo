@@ -46,7 +46,7 @@ export default function P2PTransfer() {
       validInputMap.current.amount
     );
 
-    if (tx.data.txId) {
+    if (!(tx.data instanceof String) && (tx.data as P2PTransaction).txId) {
       toast.success("Successfully Transferred...");
       await update({
         ...userSession,

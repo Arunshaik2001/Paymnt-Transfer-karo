@@ -2,6 +2,7 @@ import { AuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import getUser from "../actions/getUser";
 import getUserById from "../actions/getUserById";
+import { JWT } from "next-auth/jwt";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -49,14 +50,14 @@ export const authOptions: AuthOptions = {
         const sessionData = session as Session;
         const user = await getUserById(sessionData.user!.userId!);
 
-        return { ...token, ...user };
+        return { ...token, ...user } as JWT;
       }
 
       if (user) {
         return {
           ...token,
           ...user,
-        };
+        } as JWT;
       }
 
       if (token!.id) {
@@ -70,10 +71,10 @@ export const authOptions: AuthOptions = {
         return {
           ...token,
           ...userData,
-        };
+        } as JWT;
       }
 
-      return token;
+      return token as JWT;
     },
     async session({ session, token, user }) {
       // console.log("AUTHORIZE1 ");

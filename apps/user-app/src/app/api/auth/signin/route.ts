@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     console.log(`${email} : ${password}`);
     const user = await prisma.account.findUnique({
       where: {
-        emailId: email,
+        email: email,
       },
     });
 
@@ -21,12 +21,12 @@ export async function POST(req: NextRequest) {
           {
             message: "Success",
             user: {
-              id: user.userId,
+              id: user.id,
               bankAccount: user.bankAccountNumber,
               balance: user.balance,
               upiId: user.upiId,
-              userName: user.userName,
-              email: user.emailId,
+              userName: user.name,
+              email: user.email,
             },
           },
           {
