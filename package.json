@@ -2,7 +2,7 @@
   "name": "Paymnt-Transfer karo",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "npm run dev:prisma && turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
