@@ -63,7 +63,6 @@ export default function Form() {
           pattern="^[A-Za-z0-9]+@[a-zA-Z0-9]+\.[a-z]{2,}$"
           ref={emailRef}
           onValidText={function (text: string): void {
-            console.log(text);
             validInputMap.current.email = text;
             enableButton();
           }}
@@ -77,7 +76,6 @@ export default function Form() {
           pattern="^[A-Za-z0-9]{6,}$"
           ref={passwordRef}
           onValidText={function (text: string): void {
-            console.log(text);
             validInputMap.current.password = text;
             enableButton();
           }}

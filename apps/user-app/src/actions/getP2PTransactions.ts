@@ -16,9 +16,6 @@ export default async function getP2PTransactions(upiId: number) {
         ],
       },
     });
-
-    console.log(transactions);
-
     return transactions;
   } catch (error) {
     console.log(error);

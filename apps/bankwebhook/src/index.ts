@@ -1,8 +1,9 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import onRampRouter from "./transaction/onRamp";
 import offRampRouter from "./transaction/offRamp";
+import dotenv from "dotenv";
+
 
 dotenv.config({ path: __dirname + "/../../.env" });
 

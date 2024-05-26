@@ -73,7 +73,7 @@ onRampRouter.post(
         });
       }
 
-      const newSocket = new WebSocket("ws://localhost:3006");
+      const newSocket = new WebSocket("ws://turbo:3006");
 
       newSocket.onopen = () => {
         console.log("Connection established");

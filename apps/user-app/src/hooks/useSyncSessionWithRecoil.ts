@@ -26,12 +26,19 @@ const useSyncSessionWithRecoil = () => {
   }, [pathname]);
 
   useEffect(() => {
+    let ws: WebSocket;
     if (session?.user.userId) {
       const userSession = session.user;
       setSession(userSession);
-      const ws = new WebSocket(process.env.NEXT_PUBLIC_PAYMNT_WEBSOCKET_URL!);
 
+      ws = new WebSocket(process.env.NEXT_PUBLIC_PAYMNT_WEBSOCKET_URL!);
+      console.log(`ws ${process.env.NEXT_PUBLIC_PAYMNT_WEBSOCKET_URL!}`);
+
+      ws.onerror = (ev) => {
+        console.log(`ws.onerror ${process.env.NEXT_PUBLIC_PAYMNT_WEBSOCKET_URL!}`);
+      }
       ws.onopen = (ev: Event) => {
+        console.log('WebSocket connection established.');
         ws.send(
           JSON.stringify({
             type: "identifier",
@@ -44,7 +51,9 @@ const useSyncSessionWithRecoil = () => {
         );
       };
 
-      ws.onclose = (ev: CloseEvent) => {};
+      ws.onclose = (ev: CloseEvent) => {
+        console.log('WebSocket connection closed.');
+      };
 
       ws.onmessage = async (ev: MessageEvent) => {
         const txData = JSON.parse(ev.data);
@@ -72,6 +81,13 @@ const useSyncSessionWithRecoil = () => {
     } else {
       setSession(null);
     }
+
+    return () => {
+      if (ws && ws.OPEN) {
+        ws.close();
+      }
+
+    };
   }, [session]);
 };
 

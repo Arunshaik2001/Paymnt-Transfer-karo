@@ -1,5 +1,4 @@
 version: "3.8"
-name: "paymnt-app"
 
 services:
   turbo:
@@ -18,22 +17,7 @@ services:
       - /app/node_modules/
     restart: on-failure
     environment:
-      - DATABASE_URL=postgresql://postgres:rised@postgres:5432/paymnt?schema=public
-    depends_on:
-      - postgres
-    networks:
-      - common-network
-
-  postgres:
-    image: postgres:latest
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: rised
-    volumes:
-      - postgres:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+      - DATABASE_URL=${DATABASE_URL}
     networks:
       - common-network
 
@@ -44,5 +28,3 @@ networks:
     driver: bridge
     name: "common"
 
-volumes:
-  postgres:

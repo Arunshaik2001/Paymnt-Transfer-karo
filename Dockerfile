@@ -1,7 +1,5 @@
 FROM node:20-alpine
 
-ENV NODE_ENV development
-
 RUN apk add --no-cache libc6-compat
 
 # add turborepo
@@ -16,6 +14,6 @@ COPY . .
 
 RUN npm install
 
-EXPOSE 3005 3006 3001 3000
+EXPOSE 3001 3000 3005 3006
 
 CMD ["npm", "run", "dev:docker"]

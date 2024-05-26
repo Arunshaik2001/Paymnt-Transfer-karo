@@ -2,6 +2,10 @@ import WebSocket, { WebSocketServer } from "ws";
 import http, { IncomingMessage, ServerResponse } from "http";
 import { WebsocketTransactionPayload } from "@repo/types/types";
 import { rawDataToJson } from "@repo/utils/utils";
+import dotenv from "dotenv";
+
+
+dotenv.config({ path: __dirname + "/../../.env" });
 
 const httpServer = http.createServer(
   (request: IncomingMessage, response: ServerResponse) => {
@@ -16,6 +20,8 @@ const wss = new WebSocketServer({ server: httpServer });
 const clients: { [key: string]: WebSocket } = {};
 
 wss.on("connection", (ws) => {
+
+  console.log('WEBSOCKET SERVER CONNECTED');
   let clientId: string;
 
   ws.on("error", console.error);
@@ -54,6 +60,8 @@ wss.on("connection", (ws) => {
   });
 });
 
-httpServer.listen(3006, "localhost", () => {
-  console.log("Started Server at 3006");
+const PORT: number = Number(process.env.PAYMNT_WEBSOCKET_PORT || 3006);
+
+httpServer.listen(PORT, "0.0.0.0", () => {
+  console.log("Started Server at " + PORT);
 });

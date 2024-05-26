@@ -5,7 +5,6 @@ import { authOptions } from "@/lib/auth";
 
 export default async function RegisterPage() {
   const session = await getServerSession(authOptions);
-  console.log(session?.user!.name);
   if (session) {
     redirect("/");
   }

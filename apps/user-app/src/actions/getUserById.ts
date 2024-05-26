@@ -4,7 +4,6 @@ import prisma from "@repo/db/client";
 
 export default async function getUserById(userID: number) {
   try {
-    console.log(`${userID}`);
     const user = await prisma.account.findUnique({
       where: {
         id: Number(userID),
