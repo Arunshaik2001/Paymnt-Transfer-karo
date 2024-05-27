@@ -2,10 +2,7 @@ version: "3.8"
 
 services:
   turbo:
-    container_name: payment-app
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: arunshaik2001/paymnt-app:latest
     ports:
       - "3000:3000"
       - "3001:3001"
@@ -21,10 +18,7 @@ services:
     networks:
       - common-network
 
-
-
 networks:
   common-network:
     driver: bridge
     name: "common"
-
