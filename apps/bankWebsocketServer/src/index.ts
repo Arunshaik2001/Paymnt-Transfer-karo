@@ -1,13 +1,27 @@
 import WebSocket, { WebSocketServer } from "ws";
 import http, { IncomingMessage, ServerResponse } from "http";
+import https from "https"
 import { WebsocketTransactionPayload } from "@repo/types/types";
 import { rawDataToJson } from "@repo/utils/utils";
 import dotenv from "dotenv";
+import fs from "fs"
 
 
 dotenv.config({ path: __dirname + "/../../.env" });
 
+// SSL certificates
+// const privateKey = fs.readFileSync('/path/to/privkey.pem', 'utf8');
+// const certificate = fs.readFileSync('/path/to/cert.pem', 'utf8');
+// const ca = fs.readFileSync('/path/to/chain.pem', 'utf8');
+
+// const credentials = {
+//   key: privateKey,
+//   cert: certificate,
+//   ca: ca
+// };
+
 const httpServer = http.createServer(
+
   (request: IncomingMessage, response: ServerResponse) => {
     response.statusCode = 200;
     response.setHeader("Content-Type", "text/plain");
