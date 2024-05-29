@@ -9,27 +9,34 @@ import fs from "fs"
 
 dotenv.config({ path: __dirname + "/../../.env" });
 
-// SSL certificates
-// const privateKey = fs.readFileSync('/path/to/privkey.pem', 'utf8');
-// const certificate = fs.readFileSync('/path/to/cert.pem', 'utf8');
-// const ca = fs.readFileSync('/path/to/chain.pem', 'utf8');
+let server: http.Server | https.Server;
 
-// const credentials = {
-//   key: privateKey,
-//   cert: certificate,
-//   ca: ca
-// };
+try {
+  const privateKey = fs.readFileSync('/etc/letsencrypt/live/paymntsocket.dev-boi.com/privkey.pem', 'utf8');
+  const certificate = fs.readFileSync('/etc/letsencrypt/live/paymntsocket.dev-boi.com/fullchain.pem', 'utf8');
 
-const httpServer = http.createServer(
+  const credentials = {
+    key: privateKey,
+    cert: certificate,
+  };
 
-  (request: IncomingMessage, response: ServerResponse) => {
+  server = https.createServer(credentials, (request: IncomingMessage, response: ServerResponse) => {
     response.statusCode = 200;
-    response.setHeader("Content-Type", "text/plain");
-    response.end("Hello, world!\n");
-  }
-);
+    response.setHeader('Content-Type', 'text/plain');
+    response.end('Hello, world!\n');
+  });
+  console.log('HTTPS server created');
+} catch (error) {
+  console.error('Failed to read SSL certificates, falling back to HTTP:', error);
+  server = http.createServer((request: IncomingMessage, response: ServerResponse) => {
+    response.statusCode = 200;
+    response.setHeader('Content-Type', 'text/plain');
+    response.end('Hello, world!\n');
+  });
+  console.log('HTTP server created');
+}
 
-const wss = new WebSocketServer({ server: httpServer });
+const wss = new WebSocketServer({ server: server });
 
 const clients: { [key: string]: WebSocket } = {};
 
@@ -76,6 +83,6 @@ wss.on("connection", (ws) => {
 
 const PORT: number = Number(process.env.PAYMNT_WEBSOCKET_PORT || 3006);
 
-httpServer.listen(PORT, "0.0.0.0", () => {
+server.listen(PORT, () => {
   console.log("Started Server at " + PORT);
 });
