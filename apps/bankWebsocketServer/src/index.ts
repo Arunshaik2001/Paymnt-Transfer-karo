@@ -1,41 +1,17 @@
 import WebSocket, { WebSocketServer } from "ws";
 import http, { IncomingMessage, ServerResponse } from "http";
-import https from "https"
 import { WebsocketTransactionPayload } from "@repo/types/types";
 import { rawDataToJson } from "@repo/utils/utils";
 import dotenv from "dotenv";
-import fs from "fs"
 
 
 dotenv.config({ path: __dirname + "/../../.env" });
 
-let server: http.Server | https.Server;
-
-try {
-  const privateKey = fs.readFileSync('/etc/letsencrypt/live/paymntsocket.dev-boi.com/privkey.pem', 'utf8');
-  const certificate = fs.readFileSync('/etc/letsencrypt/live/paymntsocket.dev-boi.com/fullchain.pem', 'utf8');
-
-  const credentials = {
-    key: privateKey,
-    cert: certificate,
-  };
-
-  server = https.createServer(credentials, (request: IncomingMessage, response: ServerResponse) => {
-    response.statusCode = 200;
-    response.setHeader('Content-Type', 'text/plain');
-    response.end('Hello, world!\n');
-  });
-  console.log('HTTPS server created');
-} catch (error) {
-  console.error('Failed to read SSL certificates, falling back to HTTP:', error);
-  server = http.createServer((request: IncomingMessage, response: ServerResponse) => {
-    response.statusCode = 200;
-    response.setHeader('Content-Type', 'text/plain');
-    response.end('Hello, world!\n');
-  });
-  console.log('HTTP server created');
-}
-
+let server = http.createServer((request: IncomingMessage, response: ServerResponse) => {
+  response.statusCode = 200;
+  response.setHeader('Content-Type', 'text/plain');
+  response.end('Hello, world!\n');
+});
 const wss = new WebSocketServer({ server: server });
 
 const clients: { [key: string]: WebSocket } = {};
