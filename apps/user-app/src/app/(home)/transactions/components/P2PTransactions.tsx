@@ -22,7 +22,7 @@ const P2PTransactions: React.FC = () => {
   const upiId = userSession?.upiId;
 
   return (
-    <div className="mb-10">
+    <div className="flex flex-col items-center md:items-start mb-10">
       <div className="text-primaryText font-bold text-xl mb-5">
         Your Deposits
       </div>

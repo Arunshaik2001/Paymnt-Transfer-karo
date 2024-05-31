@@ -80,7 +80,7 @@ export default function WithdrawMoney() {
 
   return (
     <>
-      <div className="flex flex-col w-96 gap-6 justify-center items-center shadow-lg border border-gray-200 rounded-xl p-8 bg-white mb-10">
+      <div className="flex flex-col m-2 gap-6 justify-center items-center shadow-lg border border-gray-200 rounded-xl p-8 bg-white mb-10">
         <AppName
           title="Withdraw Money"
           className="text-3xl font-semibold text-blue-600 mb-6"

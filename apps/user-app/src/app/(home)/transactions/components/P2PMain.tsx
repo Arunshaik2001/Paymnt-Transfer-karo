@@ -4,7 +4,7 @@ import P2PTransfer from "./P2PTransfer";
 
 export default function P2PMain(){
     return <>
-        <div className="flex flex-row justify-around">
+        <div className="flex flex-col lg:flex-row justify-around">
             <P2PTransfer />
             <P2PTransactions />
         </div>

@@ -12,7 +12,7 @@ export default function Transfer() {
   return (
     <>
       <div className="pt-10 w-full">
-        <div className="text-primaryText text-2xl font-bold">Transfer</div>
+        <div className="text-primaryText text-2xl font-bold text-center md:text-start">Transfer</div>
         <Tabs tabs={tabs} />
       </div>
     </>

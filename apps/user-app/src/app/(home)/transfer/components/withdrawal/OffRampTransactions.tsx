@@ -18,7 +18,7 @@ const OffRampTransactions: React.FC = () => {
   const txs = rampTxs.contents as RampTransaction[];
 
   return (
-    <div className="mb-10">
+    <div className="flex flex-col items-center md:items-start mb-10">
       <div className="text-primaryText font-bold text-xl mb-5">
         Your Withdrawals
       </div>

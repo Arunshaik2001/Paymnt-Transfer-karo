@@ -60,7 +60,7 @@ export default function DepositMoney() {
 
   return (
     <>
-      <div className="flex flex-col gap-6 justify-center items-center shadow-lg border border-gray-200 rounded-xl p-8 bg-white mt-10 mb-10">
+      <div className="flex flex-col m-2 gap-6 justify-center items-center shadow-lg border border-gray-200 rounded-xl p-8 bg-white mt-10 mb-10">
         <AppName
           title="Add Money"
           className="text-3xl font-semibold text-blue-600 mb-6"

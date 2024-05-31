@@ -21,23 +21,19 @@ export default function SideBarItem({
   onClick,
 }: ItemType) {
   return (
-    <>
-      <Link href={href} onClick={onClick}>
-        <div className="flex px-10 pt-5 pb-5 flex-row items-center">
-          <div className="w-5 mr-5">
-            <FontAwesomeIcon
-              icon={icon}
-              size="2x"
-              className={isSelected ? "text-primaryText" : ""}
-            />
-          </div>
-          <div
-            className={`text-xl font-bold ${isSelected ? "text-primaryText" : "text-black"}`}
-          >
-            {name}
-          </div>
+    <Link href={href} onClick={onClick}>
+      <div className={`flex flex-col  md:flex-row justify-center items-center md:justify-start p-5 ${isSelected ? 'bg-gray-200' : ''}`}>
+        <div className="w-5 mr-2 md:mr-5">
+          <FontAwesomeIcon
+            icon={icon}
+            size="2x"
+            className={isSelected ? "text-primaryText" : "text-black"}
+          />
         </div>
-      </Link>
-    </>
+        <div className={`text-xl font-bold text-center ${isSelected ? "text-primaryText" : "text-black"}`}>
+          {name}
+        </div>
+      </div>
+    </Link>
   );
 }

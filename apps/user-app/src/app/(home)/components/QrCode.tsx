@@ -17,8 +17,8 @@ const QRCodeWithCopy = ({ upiId }: QrCodeType) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6">UPI ID QR Code</h1>
+    <div className="flex flex-col items-center justify-center lg:min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-center">UPI ID QR Code</h1>
       <QRCode value={String(upiId)} size={200} />
       <div className="flex items-center mt-4">
         <span className="text-lg mr-2">{upiId}</span>

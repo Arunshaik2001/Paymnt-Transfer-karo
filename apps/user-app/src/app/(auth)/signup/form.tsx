@@ -70,7 +70,7 @@ export default function Form() {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-2 max-w-md w-[60%] h-[90%] justify-center shadow-2xl items-center border border-venmoBlue rounded-2xl px-10"
+        className="flex flex-col gap-2 m-5 md:m-0 w-full md:max-w-md md:w-[60%] h-[90%] justify-center shadow-2xl items-center border border-venmoBlue rounded-2xl px-10"
       >
         <AppName />
         <TextFieldWithLabel

@@ -27,7 +27,8 @@ jobs:
             if [ -d "$TARGET_DIR" ]; then
               rm -rf "$TARGET_DIR"
             fi
+
             git clone -b $BRANCH $REPO_URL $TARGET_DIR
-            # cd $TARGET_DIR
-            # npm install
-            # npm install -g pm2
+            cd $TARGET_DIR
+            npm install
+            npm install -g pm2
