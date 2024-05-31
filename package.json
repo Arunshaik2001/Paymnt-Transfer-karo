@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "npm run prisma-generate && turbo build",
+    "dev:user-app": "turbo dev --filter=user-app",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

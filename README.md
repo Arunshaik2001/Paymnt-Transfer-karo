@@ -9,7 +9,8 @@ This is a fake money transfer app built using nextjs.
 
 ## Demo
 
-[Screencast from 21-05-24 04:39:41 PM IST.webm](https://github.com/Arunshaik2001/Paymnt-Transfer-karo/assets/50947867/ad4ad0f4-f3a6-4010-98b5-b53486e20d95)
+[PaymntApp.webm](https://github.com/Arunshaik2001/Paymnt-Transfer-karo/assets/50947867/915853c3-3aa0-489f-801d-8ce73030be96)
+
 
 
 ## Features
@@ -27,8 +28,22 @@ This is a fake money transfer app built using nextjs.
  2. NextAuth
  3. Websocket
  4. Express Server
- 5. Redis as Queues
- 6. Postgres
+ 5. Postgres
+ 6. Docker
+
+## CI/CD jobs
+ 1. On pull requests build job will be run
+ 2. On push to main branch it will be pushed docker image.
+ 3. On push to main branch it will copy main branch to ec2 server and start the nodejs apps.
+
+## Set up
+```
+ clone the repo
+ npm install
+ npx pm2 start ecosystem.config.js
+ npm run dev:user-app
+```
+
 
 
 

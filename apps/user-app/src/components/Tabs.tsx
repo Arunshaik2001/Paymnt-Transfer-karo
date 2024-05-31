@@ -14,7 +14,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs }) => {
 
   return (
     <div className="w-full mt-10">
-      <div className="flex space-x-4 justify-center md:justify-start">
+      <div className="flex space-x-4 justify-center md:justify-start md:pl-5">
         {tabs.map((tab, index) => (
           <button
             key={index}
