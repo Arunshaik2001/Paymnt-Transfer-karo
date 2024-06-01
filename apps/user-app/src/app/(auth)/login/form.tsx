@@ -28,12 +28,12 @@ export default function Form() {
       email: formData.get("email"),
       password: formData.get("password"),
       redirect: false,
-      callbackUrl: "/",
+      callbackUrl: "/transfer",
     });
 
     if (!response?.error) {
       toast.success("Successfully Logged In");
-      router.push("/");
+      router.push("/transfer");
       router.refresh();
     } else {
       toast.error(
