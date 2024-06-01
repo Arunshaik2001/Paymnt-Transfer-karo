@@ -72,6 +72,12 @@ module.exports = {
 ```
 
 
+### For dummy data
+[seed.ts](https://github.com/Arunshaik2001/Paymnt-Transfer-karo/blob/main/packages/db/prisma/seed.ts)
 
+You can run in the packages/db folder
+```sh
+ npx prisma db seed
+```
 
 
