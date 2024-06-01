@@ -13,7 +13,7 @@ export default function SideBar() {
   const [dashboard, setDashboard] = useRecoilState(dashboardAtom);
 
   return (
-    <div className="flex flex-row justify-around md:flex-col">
+    <div className="flex flex-row justify-around md:flex-col w-full md:w-auto">
       <SideBarItem
         href="/"
         name="Home"
