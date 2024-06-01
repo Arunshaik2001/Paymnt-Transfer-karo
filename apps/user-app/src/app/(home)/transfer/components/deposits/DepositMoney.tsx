@@ -84,8 +84,8 @@ export default function DepositMoney() {
 
         <DropdownButton
           items={[
-            { key: "Hdfc Bank", value: "HDFC" },
-            { key: "Kotak Bank", value: "KOTAK" },
+            { key: "Fake Hdfc Bank", value: "HDFC" },
+            { key: "Fake Kotak Bank", value: "KOTAK" },
           ]}
           label="Select netbanking app"
           className="w-full border border-gray-300 rounded-lg p-3 focus:border-blue-500 focus:ring-blue-500"
