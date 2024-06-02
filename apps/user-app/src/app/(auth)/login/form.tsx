@@ -88,7 +88,7 @@ export default function Form() {
         />
         
         <Turnstile
-      sitekey={process.env.NEXT_CAPTCHA!}
+      sitekey={process.env.NEXT_PUBLIC_CAPTCHA!}
       onVerify={(token) => {
         validInputMap.current.captchaToken = token;
         setIsCaptchaVerified(true);
