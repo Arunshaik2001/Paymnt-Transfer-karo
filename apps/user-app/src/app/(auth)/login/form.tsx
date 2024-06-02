@@ -17,7 +17,6 @@ export default function Form() {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [showLoginButton, setShowLoginButton] = useState(false);
-  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const validInputMap = useRef({
     email: "",
@@ -64,7 +63,7 @@ export default function Form() {
 
   function enableButton() {
     setShowLoginButton(
-      validInputMap.current.email != "" && validInputMap.current.password != "" && isCaptchaVerified
+      validInputMap.current.email != "" && validInputMap.current.password != "" && validInputMap.current.captchaToken != ''
     );
   }
 
@@ -106,7 +105,7 @@ export default function Form() {
           onVerify={(token) => {
             validInputMap.current.captchaToken = token;
             console.log(token);
-            setIsCaptchaVerified(true);
+            enableButton()
           }}
           onLoad={(widgetId, boundTurntile) => {
             console.log(widgetId);

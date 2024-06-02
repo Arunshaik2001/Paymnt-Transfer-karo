@@ -5,6 +5,7 @@ export async function POST(req: NextRequest) {
     try {
         const { token }: {token: string} = await req.json();
         let formData = new FormData();
+        console.log(token);
         formData.append('secret', process.env.NEXT_CAPTCHA_KEY!);
         formData.append('response', token);
     
@@ -13,7 +14,11 @@ export async function POST(req: NextRequest) {
             body: formData,
             method: 'POST',
         });
-      const challengeSucceeded = (await result.json()).success;
+
+      const resJson =  (await result.json());
+      const challengeSucceeded = resJson.success;
+
+      console.log(resJson)  
     
       return NextResponse.json(
         { message: challengeSucceeded ? "Success" : "Invalid Captcha, Please retry..." },
