@@ -30,23 +30,36 @@ export default function Form() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const response = await signIn("credentials", {
-      email: formData.get("email"),
-      password: formData.get("password"),
-      captchaToken: validInputMap.current.captchaToken,
-      redirect: false,
-      callbackUrl: "/transfer",
+    const captachaRes = await fetch(`/api/checkCaptchaValidity`, {
+      method: "POST",
+      body: JSON.stringify({
+        token: validInputMap.current.captchaToken,
+      }),
     });
-
-    if (!response?.error) {
-      toast.success("Successfully Logged In");
-      router.push("/transfer");
-      router.refresh();
+    console.log({ captachaRes });
+    if (captachaRes.status === 200) {
+      const response = await signIn("credentials", {
+        email: formData.get("email"),
+        password: formData.get("password"),
+       
+        redirect: false,
+        callbackUrl: "/transfer",
+      });
+  
+      if (!response?.error) {
+        toast.success("Successfully Logged In");
+        router.push("/transfer");
+        router.refresh();
+      } else {
+        toast.error(
+          "Unable to login. Please check your registered email and pasword"
+        );
+      }
     } else {
-      toast.error(
-        "Unable to login. Please check your registered email and pasword"
-      );
+      toast.error((await captachaRes.json()).message);
     }
+
+    
   };
 
   function enableButton() {

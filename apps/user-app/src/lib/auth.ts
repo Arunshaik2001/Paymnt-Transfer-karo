@@ -20,16 +20,10 @@ export const authOptions: AuthOptions = {
           placeholder: "Enter your password",
           type: "password",
         },
-        captchaToken: {},
+        
       },
       async authorize(credentials, req) {
         try {
-          const captchaValid = await checkValidCaptcha(credentials?.captchaToken!);
-
-          if(!captchaValid){
-            return null;
-          }
-
           const userRes = await getUser(
             credentials!.email,
             credentials!.password
