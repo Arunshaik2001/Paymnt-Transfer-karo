@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import getUser from "../actions/getUser";
 import getUserById from "../actions/getUserById";
 import { JWT } from "next-auth/jwt";
+import checkValidCaptcha from "@/actions/checkValidCaptcha";
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -19,9 +20,16 @@ export const authOptions: AuthOptions = {
           placeholder: "Enter your password",
           type: "password",
         },
+        captchaToken: {},
       },
       async authorize(credentials, req) {
         try {
+          const captchaValid = await checkValidCaptcha(credentials?.captchaToken!);
+
+          if(!captchaValid){
+            return null;
+          }
+
           const userRes = await getUser(
             credentials!.email,
             credentials!.password

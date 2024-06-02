@@ -33,6 +33,7 @@ export default function Form() {
     const response = await signIn("credentials", {
       email: formData.get("email"),
       password: formData.get("password"),
+      captchaToken: validInputMap.current.captchaToken,
       redirect: false,
       callbackUrl: "/transfer",
     });
@@ -88,12 +89,12 @@ export default function Form() {
         />
         
         <Turnstile
-      sitekey={process.env.NEXT_PUBLIC_CAPTCHA!}
-      onVerify={(token) => {
-        validInputMap.current.captchaToken = token;
-        setIsCaptchaVerified(true);
-      }}
-    />
+          sitekey={process.env.NEXT_PUBLIC_CAPTCHA!}
+          onVerify={(token) => {
+            validInputMap.current.captchaToken = token;
+            setIsCaptchaVerified(true);
+          }}
+        />
 
         <Button
           type={"submit"}

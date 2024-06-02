@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>{children}
-      <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon={`{"token": ${process.env.NEXT_CLOUDFARE_TOKEN}}`} strategy="afterInteractive"></Script>
+      <Script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon={`{"token": ${process.env.NEXT_PUBLIC_CLOUDFARE_TOKEN!}}`} strategy="afterInteractive"></Script>
       </body>
       
     </html>
