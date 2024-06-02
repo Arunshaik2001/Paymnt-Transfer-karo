@@ -105,7 +105,15 @@ export default function Form() {
           sitekey={process.env.NEXT_PUBLIC_CAPTCHA!}
           onVerify={(token) => {
             validInputMap.current.captchaToken = token;
+            console.log(token);
             setIsCaptchaVerified(true);
+          }}
+          onLoad={(widgetId, boundTurntile) => {
+            console.log(widgetId);
+            boundTurntile.reset();
+          }}
+          onError={(error) => {
+            console.log(error);
           }}
         />
 
