@@ -6,20 +6,26 @@ import TextFieldWithLabel from "@/components/TextFieldWithLabel";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Turnstile, { useTurnstile } from "react-turnstile";
 import { FormEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 
 export default function Form() {
   const router = useRouter();
+  const turnstile = useTurnstile();
 
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [showLoginButton, setShowLoginButton] = useState(false);
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
 
   const validInputMap = useRef({
     email: "",
     password: "",
+    captchaToken: ""
   });
+
+  
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,7 +50,7 @@ export default function Form() {
 
   function enableButton() {
     setShowLoginButton(
-      validInputMap.current.email != "" && validInputMap.current.password != ""
+      validInputMap.current.email != "" && validInputMap.current.password != "" && isCaptchaVerified
     );
   }
 
@@ -80,12 +86,22 @@ export default function Form() {
             enableButton();
           }}
         />
+        
+        <Turnstile
+      sitekey={process.env.NEXT_CAPTCHA!}
+      onVerify={(token) => {
+        validInputMap.current.captchaToken = token;
+        setIsCaptchaVerified(true);
+      }}
+    />
+
         <Button
           type={"submit"}
           label="LogIn"
           onClick={() => {}}
           enabled={showLoginButton}
         />
+
 
         <Link
           href="/signup"
