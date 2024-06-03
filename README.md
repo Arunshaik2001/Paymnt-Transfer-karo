@@ -80,4 +80,5 @@ You can run in the packages/db folder
  npx prisma db seed
 ```
 
-
+### Contribute
+Pick issues from [issues](https://github.com/Arunshaik2001/Paymnt-Transfer-karo/issues)
