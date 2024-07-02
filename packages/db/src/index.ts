@@ -4,6 +4,7 @@ const prismaSingletion = () => {
   return new PrismaClient();
 };
 
+
 declare global {
   var prismaClient: undefined | ReturnType<typeof prismaSingletion>;
 }
