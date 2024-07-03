@@ -7,6 +7,10 @@ import {
 } from "@prisma/client";
 import prisma from "@repo/db/client";
 import brcypt from "bcrypt";
+import dotenv from "dotenv";
+
+dotenv.config({ path: __dirname + "/../../../.env" })
+
 
 async function main() {
   const userAccount = await prisma.account.upsert({

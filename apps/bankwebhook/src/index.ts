@@ -5,7 +5,8 @@ import offRampRouter from "./transaction/offRamp";
 import dotenv from "dotenv";
 
 
-dotenv.config({ path: __dirname + "/../../.env" });
+dotenv.config({ path: __dirname + "/../../../.env" });
+
 
 const app = express();
 
@@ -15,7 +16,6 @@ app.use(express.json());
 app.use("/api/v1/transaction/hdfcWebhook", onRampRouter);
 
 app.use("/api/v1/transaction/hdfcWebhook/offRamp", offRampRouter);
-
-app.listen(process.env.PAYMNT_WEBHOOK_PORT, () => {
+app.listen(process.env.PAYMNT_WEBHOOK_PORT || 3005, () => {
   console.log(`Started webhook at ${process.env.PAYMNT_WEBHOOK_PORT}`);
 });

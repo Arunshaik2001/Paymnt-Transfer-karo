@@ -2,7 +2,8 @@ version: "3.8"
 
 services:
   turbo:
-    image: arunshaik2001/paymnt-app:latest
+    image: arunshaik2001/paymnt-app:docker
+    container_name: paymnt-app
     ports:
       - "3000:3000"
       - "3001:3001"
@@ -13,8 +14,6 @@ services:
       - ./:/app/
       - /app/node_modules/
     restart: on-failure
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
     networks:
       - common-network
 

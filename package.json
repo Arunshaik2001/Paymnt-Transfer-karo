@@ -8,9 +8,9 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "dev:docker": "npm run dev:prisma && npm run dev",
-    "dev:prisma": "cd packages/db && npx prisma migrate dev && npx prisma db seed",
-    "prisma-generate": "cd packages/db && npx prisma generate",
-    "docker-compose": "docker-compose --env-file ./packages/db/.env up",
+    "dev:prisma": "cd packages/db && npm run prisma:migrate && npm run prisma:seed",
+    "prisma-generate": "cd packages/db && npm run prisma:generate",
+    "docker-compose": "docker-compose --env-file ./.env up",
     "root": "sudo chown -R $USER /home/arun/Desktop/PaymntApp"
   },
   "devDependencies": {
@@ -26,5 +26,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
 }

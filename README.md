@@ -36,7 +36,9 @@ This is a fake money transfer app built using nextjs.
  2. On push to main branch it will be pushed docker image.
  3. On push to main branch it will copy main branch to ec2 server and start the nodejs apps.
 
-## Set up
+## Set up Locally
+
+### Without Docker
 ```js
 // Make Sure You have env.js created on root folder where you have both netbanking and paymnt repo.
 
@@ -71,6 +73,53 @@ module.exports = {
  npm run dev:user-app
 ```
 
+### With Docker
+
+**Step 1:** add this in **.env** file inside /Paymnt-Transfer-karo
+
+make sure to update with your own **database url **
+```js
+DATABASE_URL="postgres://YOUR_DATABASE_URL/paymnt?sslmode=require"
+HDFC_PAYMNT_BANK_SERVER_KEY="HDFC_SECRET"
+PAYMNT_HDFC_BANK_SERVER_KEY="PAYMNT_SECRET_HDFC"
+KOTAK_PAYMNT_BANK_SERVER_KEY="KOTAK_SECRET"
+PAYMNT_KOTAK_BANK_SERVER_KEY="PAYMNT_SECRET_KOTAK"
+HDFC_BANK_SERVER="http://netbanking:4000"
+KOTAK_BANK_SERVER=
+HDFC_BANK_OFF_RAMP_URL=
+KOTAK_BANK_OFF_RAMP_URL=
+PAYMNT_OFF_RAMP_URL=
+PAYMNT_WEBHOOK_PORT=3005
+PAYMNT_WEBSOCKET_PORT=3006
+NEXTAUTH_URL='http://localhost:3000/transfer'
+NEXTAUTH_SECRET="secret"
+NEXT_PUBLIC_PAYMNT_WEBSOCKET_URL="ws://localhost:3006"
+NEXT_PUBLIC_HDFC_DEBIT_URL="http://netbanking:5173/debit"
+NEXT_PUBLIC_PAYMNT_HDFC_SECRET="PAYMNT_SECRET_HDFC"
+NEXT_PUBLIC_HDFC_CREDIT_SERVER_URL="http://netbanking:4000/api/v1/credit"
+NEXT_PUBLIC_CLOUDFARE_TOKEN="XXXXXXXXXX"
+NEXT_PUBLIC_CAPTCHA="XXXXXXXXX"
+NEXT_CAPTCHA_KEY="XXXXXXXXX"
+```
+
+**Step 2:**
+Build the _Dockerfile_
+
+```shell
+    docker build -t paymnt-app .
+```
+
+**Step 3:**
+Update the image name in _**docker-compose.yml**_
+
+    image: paymnt-app:latest
+
+**Step 4:**
+run in /Paymnt-Transfer-karo
+
+  ```shell
+    npm run docker-compose
+  ```
 
 ### For dummy data
 [seed.ts](https://github.com/Arunshaik2001/Paymnt-Transfer-karo/blob/main/packages/db/prisma/seed.ts)

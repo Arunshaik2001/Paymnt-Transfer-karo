@@ -3,9 +3,7 @@ import http, { IncomingMessage, ServerResponse } from "http";
 import { WebsocketTransactionPayload } from "@repo/types/types";
 import { rawDataToJson } from "@repo/utils/utils";
 import dotenv from "dotenv";
-
-
-dotenv.config({ path: __dirname + "/../../.env" });
+dotenv.config({ path: __dirname + "/../../../.env" });
 
 let server = http.createServer((request: IncomingMessage, response: ServerResponse) => {
   response.statusCode = 200;
