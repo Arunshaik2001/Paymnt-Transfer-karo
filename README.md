@@ -71,6 +71,9 @@ module.exports = {
  npm run dev:user-app
 ```
 
+### Run Locally using Docker
+docker setup is done in branch (**docker-setup**)[https://github.com/Arunshaik2001/Paymnt-Transfer-karo/tree/docker-setup]
+[Docker setup branch](https://github.com/Arunshaik2001/Paymnt-Transfer-karo/tree/docker-setup?tab=readme-ov-file#with-docker)
 
 ### For dummy data
 [seed.ts](https://github.com/Arunshaik2001/Paymnt-Transfer-karo/blob/main/packages/db/prisma/seed.ts)
