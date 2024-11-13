@@ -27,7 +27,7 @@ This is a fake money transfer app built using nextjs.
  1. Nextjs
  2. NextAuth
  3. Websocket
- 4. Express Server
+ 4. Express Node Server
  5. Postgres
  6. Docker
 
